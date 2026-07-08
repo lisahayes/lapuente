@@ -1,0 +1,22 @@
+{
+  "name": "La Puente Leak Repair Experts",
+  "short_name": "LP Leak Repair",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#132441",
+  "theme_color": "#132441",
+  "icons": [
+    {
+      "src": "/images/logo-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

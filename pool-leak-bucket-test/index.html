@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/logo-icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/logo-icon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<title>Pool Leak Bucket Test Calculator | La Puente California</title>
+<meta name="description" content="Find out if your La Puente pool is leaking or just losing water to evaporation. Enter your 24-hour measurements for gallons lost and real LPVCWD water cost.">
+<link rel="canonical" href="https://lapuenteleakrepairpros.com/pool-leak-bucket-test">
+<meta property="og:title" content="Pool Leak Bucket Test Calculator | La Puente California">
+<meta property="og:description" content="Find out if your La Puente pool is leaking or just losing water to evaporation. Enter your 24-hour measurements for gallons lost and real LPVCWD water cost.">
+<meta property="og:url" content="https://lapuenteleakrepairpros.com/pool-leak-bucket-test">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://lapuenteleakrepairpros.com/images/hero/hero-bg.jpg">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Plumber",
+  "@id": "https://lapuenteleakrepairpros.com/#business",
+  "name": "La Puente Leak Repair Experts",
+  "telephone": "+16268986169",
+  "url": "https://lapuenteleakrepairpros.com/",
+  "image": "https://lapuenteleakrepairpros.com/images/hero/hero-bg.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3107 Lake View Rd",
+    "addressLocality": "La Puente",
+    "addressRegion": "CA",
+    "postalCode": "91744",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.02,
+    "longitude": -117.9495
+  },
+  "areaServed": [
+    "La Puente",
+    "West Covina",
+    "Hacienda Heights",
+    "Baldwin Park",
+    "South El Monte",
+    "Rowland Heights",
+    "Whittier",
+    "Covina"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "00:00",
+      "closes": "23:59"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://lapuenteleakrepairpros.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Pool Leak or Just Evaporation? La Puente",
+      "item": "https://lapuenteleakrepairpros.com/pool-leak-bucket-test"
+    }
+  ]
+}
+</script>
+<script>
+
+function calcLPVCWD(totalCCF) {
+  var c = 21.08;
+  if (totalCCF <= 0) return c;
+  var t1 = Math.min(totalCCF, 8);
+  var t2 = Math.min(Math.max(totalCCF - 8, 0), 6);
+  var t3 = Math.max(totalCCF - 14, 0);
+  return c + (t1 * 2.16) + (t2 * 3.34) + (t3 * 4.49);
+}
+function poolLeakCost(leakCCF) {
+  return calcLPVCWD(6 + leakCCF) - calcLPVCWD(6);
+}
+
+function runBucketTest() {
+  var shape     = document.getElementById("pool-shape").value;
+  var poolDrop  = parseFloat(document.getElementById("pool-drop").value);
+  var bucketDrop = parseFloat(document.getElementById("bucket-drop").value);
+
+  var box     = document.getElementById("result-box");
+  var verdict = document.getElementById("result-verdict");
+  var body    = document.getElementById("result-body");
+
+  if (isNaN(poolDrop) || isNaN(bucketDrop) || poolDrop < 0 || bucketDrop < 0) {
+    verdict.textContent = "Please enter both drop measurements.";
+    body.innerHTML = "";
+    box.className = "result-box visible";
+    return;
+  }
+
+  var surfaceSqFt = 0;
+  if (shape === "rectangular") {
+    var L = parseFloat(document.getElementById("pool-len").value) || 0;
+    var W = parseFloat(document.getElementById("pool-wid").value) || 0;
+    surfaceSqFt = L * W;
+  } else if (shape === "oval") {
+    var L = parseFloat(document.getElementById("oval-len").value) || 0;
+    var W = parseFloat(document.getElementById("oval-wid").value) || 0;
+    surfaceSqFt = L * W * 0.785;
+  } else {
+    surfaceSqFt = parseFloat(document.getElementById("pool-sqft").value) || 0;
+  }
+
+  if (surfaceSqFt <= 0) {
+    verdict.textContent = "Please enter valid pool dimensions.";
+    body.innerHTML = "";
+    box.className = "result-box visible";
+    return;
+  }
+
+  var leakInches  = Math.max(0, poolDrop - bucketDrop);
+  var gpdLeak     = surfaceSqFt * leakInches * 0.6233;
+  var gpmLeak     = gpdLeak * 30.44;
+  var gpyLeak     = gpdLeak * 365;
+  var ccfM        = gpmLeak / 748;
+  var mCost       = poolLeakCost(ccfM);
+  var yCost       = mCost * 12;
+
+  var verdictText, detailHTML;
+
+  if (leakInches <= 0) {
+    verdictText = "No leak detected";
+    detailHTML =
+      "<p>Your pool and bucket dropped at the same rate. The water loss is within normal evaporation. San Gabriel Valley pools can lose up to a quarter inch per day in summer heat. If the level keeps dropping week after week, retest on a cooler, calmer day to confirm.</p>" +
+      "<div class='note-box'><strong>Pump-on vs pump-off tip</strong>" +
+      "For a more detailed diagnosis, run a second 24-hour test with the pump completely off. If the pool loses more water with the pump running than without, the leak is on the pressure side of the plumbing. If it loses more with the pump off, the leak is on the suction side or in the shell.</div>";
+  } else if (leakInches <= 0.25) {
+    verdictText = "Borderline result";
+    detailHTML =
+      "<p>Your pool lost " + leakInches.toFixed(2) + " inches more than the bucket. This may be within test measurement error, especially on a hot or windy day. Retest to confirm before calling a technician.</p>" +
+      "<p>If confirmed: <strong>" + gpdLeak.toFixed(0) + " gallons per day</strong>, about <strong>$" + mCost.toFixed(2) + " per month</strong> at LPVCWD rates.</p>" +
+      "<div class='note-box'><strong>Pump-on vs pump-off tip</strong>" +
+      "Run a second test with the pump off. Pump-on loss greater than pump-off loss points to pressure-side plumbing. Equal loss points to the shell or fittings.</div>";
+  } else if (leakInches <= 0.5) {
+    verdictText = "Possible leak: " + gpdLeak.toFixed(0) + " gallons per day";
+    detailHTML =
+      "<p>Your pool is losing <strong>" + leakInches.toFixed(2) + " inches per day</strong> more than the bucket. That is approximately <strong>" + gpdLeak.toFixed(0) + " gallons per day</strong>, <strong>" + Math.round(gpmLeak).toLocaleString() + " gallons per month</strong>.</p>" +
+      "<p>Water cost at LPVCWD rates: <strong>$" + mCost.toFixed(2) + " per month</strong>, <strong>$" + Math.round(yCost).toLocaleString() + " per year</strong>.</p>" +
+      "<p>Retest to confirm, then consider a professional pressure test on the pool plumbing.</p>" +
+      "<div class='note-box'><strong>Sewer note</strong>Pool water drains to the yard, not the sewer. La Puente sewer is a flat annual property tax charge and does not change with pool refilling.</div>" +
+      "<div class='note-box'><strong>Pump-on vs pump-off tip</strong>" +
+      "Run a second 24-hour test with the pump completely off. If loss is higher with the pump on, the leak is on the pressure-side plumbing. If loss is similar either way, suspect the shell, skimmer, or fittings.</div>";
+  } else {
+    verdictText = "Likely leak: " + gpdLeak.toFixed(0) + " gallons per day";
+    detailHTML =
+      "<p>Your pool is losing <strong>" + leakInches.toFixed(2) + " inches per day</strong> more than the bucket. That is well above normal evaporation for the San Gabriel Valley. Estimated loss: <strong>" + gpdLeak.toFixed(0) + " gallons per day</strong>, <strong>" + Math.round(gpmLeak).toLocaleString() + " gallons per month</strong>, <strong>" + Math.round(gpyLeak).toLocaleString() + " gallons per year</strong>.</p>" +
+      "<p>Water cost at LPVCWD rates: <strong>$" + mCost.toFixed(2) + " per month</strong>, <strong>$" + Math.round(yCost).toLocaleString() + " per year</strong>.</p>" +
+      "<div class='note-box'><strong>Sewer note</strong>Pool water drains to the yard, not the sewer. La Puente sewer is a flat annual property tax charge that does not change with pool refilling or top-off water use.</div>" +
+      "<div class='note-box'><strong>Year-round note</strong>La Puente pools are used all 12 months of the year. A leak at this rate runs continuously and adds to the water bill every single month.</div>" +
+      "<div class='note-box'><strong>Pump-on vs pump-off tip</strong>" +
+      "Pump-on loss greater than pump-off loss: pressure-side plumbing leak. " +
+      "Pump-off loss greater than pump-on loss: suction side, skimmer, or shell. " +
+      "Equal loss both ways: shell or fittings. Share this comparison with the technician.</div>";
+  }
+
+  verdict.textContent = verdictText;
+  body.innerHTML = detailHTML;
+  box.className = "result-box visible";
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  function updateShape() {
+    var s = document.getElementById("pool-shape").value;
+    document.getElementById("rect-dims").style.display  = s === "rectangular" ? "block" : "none";
+    document.getElementById("oval-dims").style.display  = s === "oval" ? "block" : "none";
+    document.getElementById("irreg-dims").style.display = s === "irregular" ? "block" : "none";
+  }
+  document.getElementById("pool-shape").addEventListener("change", updateShape);
+  updateShape();
+});
+
+</script>
+<style>
+.steps-list{padding-left:1.3rem;margin:.8rem 0 1.2rem}
+.steps-list li{margin:.5rem 0;color:var(--text-soft);font-size:.95rem}
+.tool-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);padding:1.5rem;margin:1.4rem 0}
+.tool-row{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1rem}
+.tool-field{display:flex;flex-direction:column;gap:.35rem;min-width:180px;flex:1}
+.tool-field label{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.tool-field input,.tool-field select{background:var(--primary-dark);border:1px solid var(--line);color:var(--text);padding:.6rem .75rem;border-radius:5px;font-size:.95rem;font-family:inherit}
+.tool-field input:focus,.tool-field select:focus{outline:2px solid var(--gold);outline-offset:1px}
+.tool-field input[type=number]{max-width:160px}
+.btn-calc{background:var(--gold);color:var(--gold-ink);font-family:Georgia,serif;font-weight:700;border:0;padding:.9rem 1.8rem;border-radius:5px;font-size:1rem;cursor:pointer;margin-top:.6rem;letter-spacing:.02em}
+.btn-calc:hover{background:var(--gold-dark)}
+.result-box{display:none;margin-top:1.3rem;background:var(--primary-dark);border:1px solid var(--gold);border-radius:var(--radius);padding:1.2rem 1.4rem}
+.result-box.visible{display:block}
+.result-verdict{font-family:Georgia,serif;font-size:1.3rem;color:var(--gold);margin-bottom:.5rem}
+.result-body{font-size:.93rem;color:var(--text-soft);line-height:1.65}
+.result-body p{margin:.55rem 0}
+.note-box{border-left:3px solid var(--gold);background:var(--primary-darkest);border-radius:0 5px 5px 0;padding:.8rem 1rem;margin:.9rem 0;font-size:.88rem;color:var(--text-soft)}
+.note-box strong{color:var(--gold);display:block;margin-bottom:.3rem}
+.progress-wrap{background:var(--primary-darkest);border-radius:20px;height:12px;margin:.6rem 0 1rem;overflow:hidden}
+.progress-fill{height:100%;border-radius:20px;background:var(--gold);transition:width .3s ease;width:0%}
+.score-display{font-family:Georgia,serif;font-size:1.15rem;color:var(--text-soft);margin-bottom:.3rem}
+.risk-item{display:flex;align-items:flex-start;gap:.7rem;padding:.6rem 0;border-bottom:1px solid var(--line);font-size:.93rem;color:var(--text-soft)}
+.risk-item:last-child{border-bottom:0}
+.risk-item input[type=checkbox]{width:1.15rem;height:1.15rem;margin-top:.2rem;flex-shrink:0;accent-color:var(--gold);cursor:pointer}
+.risk-label{flex:1;line-height:1.5}
+.risk-weight{font-size:.78rem;color:var(--muted);margin-left:.3rem;white-space:nowrap}
+.seg-btns{display:flex;flex-wrap:wrap;gap:.5rem;margin:.4rem 0 .8rem}
+.seg-btn{background:var(--primary-dark);border:1px solid var(--line);color:var(--text-soft);padding:.4rem .9rem;border-radius:5px;font-size:.88rem;cursor:pointer}
+.seg-btn.active,.seg-btn:hover{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+.faq-section h2{margin-bottom:1rem}
+.faq-item{border-bottom:1px solid var(--line);padding:.9rem 0}
+.faq-item h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
+.faq-item p{font-size:.93rem;color:var(--text-soft);line-height:1.6}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I know if my La Puente pool is leaking or just evaporating?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The bucket test separates the two causes reliably. Place a bucket of pool water on the first step so the water level inside the bucket matches the pool level outside it. Mark both levels, run the pump on its normal schedule, and check again after 24 hours. If both drop the same amount, the loss is evaporation. If the pool drops more than the bucket, the difference is a leak."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much water do San Gabriel Valley pools lose to evaporation per day?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In La Puente and the broader San Gabriel Valley, pools typically lose between a quarter inch and a third of an inch per day to evaporation during summer, less in cooler months. Wind, low humidity, and direct sun all increase the rate. The bucket test accounts for all of these conditions automatically, because the bucket and the pool are exposed to the same weather at the same time."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does pool refilling raise my sewer bill in La Puente?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. La Puente sewer is billed by the Los Angeles County Sanitation Districts as a flat annual fee on the property tax bill, not as a volumetric charge on the water bill. Pool water drains to the yard rather than the sanitary sewer, so neither pool evaporation, pool leaks, nor pool refilling increases the sewer charge."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the pool bucket test?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The pool bucket test is a simple 24-hour measurement that compares the natural evaporation rate (measured by the bucket) against the total water lost by the pool. Fill a 5-gallon bucket with pool water, set it on the first step so the inside water level matches the pool level, mark both levels, run the pump normally, and measure both drops after 24 hours. The pool bucket test calculator on this page converts the difference into gallons lost per day and the estimated water cost at La Puente Valley Water District rates."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="La Puente Leak Repair Experts home">
+      <img src="/images/logo.png"
+           alt="La Puente Leak Repair Experts"
+           class="logo-img"
+           width="220" height="105"
+           loading="eager"
+           decoding="async">
+    </a>
+    <button class="hamburger" id="menuToggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    <ul class="nav-menu" id="navMenu">
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Services <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/services/slab-leak-detection-and-repair">Slab Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/pinhole-leak-detection-and-repair">Pinhole Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/pool-leak-detection-and-repair">Pool Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/foundation-leak-detection-and-repair">Foundation Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/sewer-line-leak-detection-and-repair">Sewer Line Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/water-heater-leak-detection-and-repair">Water Heater Leak Detection &amp; Repair</a></li>
+          <li><a href="/services">View All 43 Services &rarr;</a></li>
+        </ul>
+      </li>
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Service Areas <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/locations/downtown-la-puente">Downtown La Puente</a></li>
+          <li><a href="/locations/old-town-la-puente">Old Town La Puente</a></li>
+          <li><a href="/locations/west-puente-valley">West Puente Valley</a></li>
+          <li><a href="/locations/bassett-la-puente">Bassett</a></li>
+          <li><a href="/locations/west-covina-ca">West Covina</a></li>
+          <li><a href="/locations/hacienda-heights-ca">Hacienda Heights</a></li>
+          <li><a href="/locations">View All 26 Areas &rarr;</a></li>
+        </ul>
+      </li>
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Tools <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/hidden-water-leak-detector">Hidden Leak Detector</a></li>
+          <li><a href="/leak-cost-calculator">Leak Cost Calculator</a></li>
+          <li><a href="/slab-leak-risk-checker">Slab Leak Risk Checker</a></li>
+          <li><a href="/pool-leak-bucket-test">Pool Bucket Test</a></li>
+          <li><a href="/tools">All Free Tools &rarr;</a></li>
+        </ul>
+      </li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a class="nav-phone" href="tel:+16268986169">Call (626) 898-6169</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" style="padding-bottom:1rem">
+  <div class="container" style="max-width:860px">
+    <p class="eyebrow">Free tool &middot; Pool leak detection &middot; La Puente, CA</p>
+    <h1>Pool Leak or Just Evaporation? La Puente Pool Bucket Test Calculator</h1>
+    <p class="hero-sub">La Puente pools lose water to evaporation year-round in the San Gabriel Valley climate. The bucket test is the most reliable way to separate a real leak from normal water loss before calling a <a href="/services/pool-leak-detection-and-repair">pool leak detection</a> technician. Run the test first, then enter your measurements below to get a verdict and the estimated cost at real LPVCWD water rates.</p>
+    <p style="margin-top:.9rem;font-size:.95rem">Questions while testing? <a href="tel:+16268986169">(626) 898-6169</a> walks you through the meter over the phone at any hour.</p>
+  </div>
+</section>
+
+<section class="section panel-section" style="padding:2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>How to run the 24-hour bucket test</h2>
+    <ol class="steps-list">
+      <li>Fill a 5-gallon bucket with pool water to about 1 inch from the top.</li><li>Place the bucket on the first or second pool step so the water level inside matches the pool water level outside.</li><li>Mark the inside bucket level and the outside pool level with tape or a waterproof marker.</li><li>Run the pool pump on its normal schedule. Disable auto-fill. Do not add water. Wait 24 hours.</li><li>Measure how much the level dropped inside the bucket and outside in the pool, and enter both numbers below.</li>
+    </ol>
+    <p style="margin-top:.8rem;font-size:.9rem;color:var(--muted)">Not sure what you are reading? Call <a href="tel:+16268986169">(626) 898-6169</a> and we will walk you through it.</p>
+  </div>
+</section>
+
+<section class="section" style="padding:2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Enter your bucket test results</h2>
+    <div class="tool-box">
+      
+      <div class="tool-row">
+        <div class="tool-field">
+          <label for="pool-shape">Pool shape</label>
+          <select id="pool-shape">
+            <option value="rectangular" selected>Rectangular</option>
+            <option value="oval">Oval</option>
+            <option value="irregular">Irregular (enter area)</option>
+          </select>
+        </div>
+      </div>
+      <div id="rect-dims">
+        <div class="tool-row">
+          <div class="tool-field">
+            <label for="pool-len">Pool length (ft)</label>
+            <input type="number" id="pool-len" value="30" min="5" max="200">
+          </div>
+          <div class="tool-field">
+            <label for="pool-wid">Pool width (ft)</label>
+            <input type="number" id="pool-wid" value="15" min="5" max="100">
+          </div>
+        </div>
+      </div>
+      <div id="oval-dims" style="display:none">
+        <div class="tool-row">
+          <div class="tool-field">
+            <label for="oval-len">Pool length (ft)</label>
+            <input type="number" id="oval-len" value="30" min="5" max="200">
+          </div>
+          <div class="tool-field">
+            <label for="oval-wid">Pool width (ft)</label>
+            <input type="number" id="oval-wid" value="15" min="5" max="100">
+          </div>
+        </div>
+      </div>
+      <div id="irreg-dims" style="display:none">
+        <div class="tool-row">
+          <div class="tool-field">
+            <label for="pool-sqft">Pool surface area (sq ft)</label>
+            <input type="number" id="pool-sqft" value="450" min="50" max="5000">
+          </div>
+        </div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-field">
+          <label for="bucket-drop">Level drop inside bucket over 24 hours (inches)</label>
+          <input type="number" id="bucket-drop" value="0.25" min="0" max="6" step="0.0625">
+        </div>
+        <div class="tool-field">
+          <label for="pool-drop">Level drop outside bucket (pool) over 24 hours (inches)</label>
+          <input type="number" id="pool-drop" value="0.25" min="0" max="6" step="0.0625">
+        </div>
+      </div>
+
+      <button class="btn-calc" onclick="runBucketTest()">Calculate leak and cost</button>
+      <div class="result-box" id="result-box">
+        <div class="result-verdict" id="result-verdict"></div>
+        <div class="result-body" id="result-body"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>What the pump-on and pump-off comparison tells you</h2>
+    <p style="margin-top:0">After a positive result, the most useful follow-up is a second 24-hour test with the pump completely off. If the pool loses significantly more water with the pump running than it does overnight with the pump off, the leak is on the pressure side of the plumbing, in the lines from the pump to the pool returns. If the loss is similar with the pump on or off, the leak is in the shell itself, the skimmer, or the suction fittings. Sharing that comparison with a technician from <a href="/services/inground-pool-leak-detection-and-repair">inground pool leak detection</a> typically cuts the diagnosis time in half.</p><p style="margin-top:.9rem">The post on <a href="/blog/pool-bucket-test-guide-la-puente">the pool bucket test for La Puente</a> covers the full protocol, including how to avoid common measurement errors that produce false positives on hot or windy days.</p>
+  </div>
+</section>
+
+
+<section class="section panel-section faq-section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Pool leak and bucket test questions for La Puente</h2>
+    
+    <div class="faq-item">
+      <h3>How do I know if my La Puente pool is leaking or just evaporating?</h3>
+      <p>The bucket test separates the two causes reliably. Place a bucket of pool water on the first step so the water level inside the bucket matches the pool level outside it. Mark both levels, run the pump on its normal schedule, and check again after 24 hours. If both drop the same amount, the loss is evaporation. If the pool drops more than the bucket, the difference is a leak.</p>
+    </div>
+    
+    <div class="faq-item">
+      <h3>How much water do San Gabriel Valley pools lose to evaporation per day?</h3>
+      <p>In La Puente and the broader San Gabriel Valley, pools typically lose between a quarter inch and a third of an inch per day to evaporation during summer, less in cooler months. Wind, low humidity, and direct sun all increase the rate. The bucket test accounts for all of these conditions automatically, because the bucket and the pool are exposed to the same weather at the same time.</p>
+    </div>
+    
+    <div class="faq-item">
+      <h3>Does pool refilling raise my sewer bill in La Puente?</h3>
+      <p>No. La Puente sewer is billed by the Los Angeles County Sanitation Districts as a flat annual fee on the property tax bill, not as a volumetric charge on the water bill. Pool water drains to the yard rather than the sanitary sewer, so neither pool evaporation, pool leaks, nor pool refilling increases the sewer charge.</p>
+    </div>
+    
+    <div class="faq-item">
+      <h3>What is the pool bucket test?</h3>
+      <p>The pool bucket test is a simple 24-hour measurement that compares the natural evaporation rate (measured by the bucket) against the total water lost by the pool. Fill a 5-gallon bucket with pool water, set it on the first step so the inside water level matches the pool level, mark both levels, run the pump normally, and measure both drops after 24 hours. The pool bucket test calculator on this page converts the difference into gallons lost per day and the estimated water cost at La Puente Valley Water District rates.</p>
+    </div>
+    
+    <p style="margin-top:1rem;font-size:.9rem">Have a question not answered here? Call <a href="tel:+16268986169">(626) 898-6169</a> any time.</p>
+  </div>
+</section>
+
+<section class="section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Related services and further reading</h2>
+    <p>A positive bucket test result usually leads to one of the pool service pages. The blog post on evaporation versus leaks has the full testing protocol.</p>
+    <div class="area-links" style="margin-top:.9rem">
+      <a href="/services/pool-leak-detection-and-repair">Pool Leak Detection and Repair</a><a href="/services/inground-pool-leak-detection-and-repair">Inground Pool Leak Repair</a><a href="/services/hot-tub-and-spa-leak-detection-and-repair">Hot Tub and Spa Leak Repair</a><a href="/blog/pool-bucket-test-guide-la-puente">Pool Bucket Test Guide</a>
+    </div>
+    <p class="view-all" style="margin-top:1rem">Rather talk to someone now? <a href="tel:+16268986169">(626) 898-6169</a> is answered 24 hours a day, 7 days a week.</p>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>Tool gives the estimate. We give the answer.</h2>
+    <p>Professional acoustic, electronic, and thermal detection located to the inch, priced before anything opens. Call any hour.</p>
+    <a class="btn-invert" href="tel:+16268986169">&#9742; Call (626) 898-6169 &middot; 24/7</a>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h3>La Puente Leak Repair Experts</h3>
+        <address class="nap">
+          3107 Lake View Rd<br>
+          La Puente, CA 91744<br>
+          <a href="tel:+16268986169">(626) 898-6169</a><br>
+          Open 24 hours, 7 days a week
+        </address>
+        <p style="margin-top:.7rem;color:var(--muted)">Licensed in California (CSLB). Serving the San Gabriel Valley from the Hub City.</p>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <ul>
+          <li><a href="/services/slab-leak-detection-and-repair">Slab Leak Repair</a></li>
+          <li><a href="/services/pinhole-leak-detection-and-repair">Pinhole Leak Repair</a></li>
+          <li><a href="/services/pool-leak-detection-and-repair">Pool Leak Detection</a></li>
+          <li><a href="/services/sewer-line-leak-detection-and-repair">Sewer Line Leaks</a></li>
+          <li><a href="/services/water-heater-leak-detection-and-repair">Water Heater Leaks</a></li>
+          <li><a href="/services">All 43 Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Service Areas</h3>
+        <ul>
+          <li><a href="/locations/downtown-la-puente">Downtown La Puente</a></li>
+          <li><a href="/locations/west-puente-valley">West Puente Valley</a></li>
+          <li><a href="/locations/bassett-la-puente">Bassett</a></li>
+          <li><a href="/locations/west-covina-ca">West Covina</a></li>
+          <li><a href="/locations/hacienda-heights-ca">Hacienda Heights</a></li>
+          <li><a href="/locations">All 26 Areas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <ul>
+          <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Tools <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/hidden-water-leak-detector">Hidden Leak Detector</a></li>
+          <li><a href="/leak-cost-calculator">Leak Cost Calculator</a></li>
+          <li><a href="/slab-leak-risk-checker">Slab Leak Risk Checker</a></li>
+          <li><a href="/pool-leak-bucket-test">Pool Bucket Test</a></li>
+          <li><a href="/tools">All Free Tools &rarr;</a></li>
+        </ul>
+      </li>
+      <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>&copy; 2026 La Puente Leak Repair Experts</span>
+      <span>La Puente, CA &middot; Los Angeles County &middot; <a href="tel:+16268986169">(626) 898-6169</a></span>
+    </div>
+  </div>
+
+<div class="footer-social-links" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:20px 16px 10px;"><span style="font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;opacity:.8;">Follow Us</span><a href="https://www.instagram.com/lapuenteleakrepairpros/" target="_blank" rel="noopener noreferrer" aria-label="La Puente Leak Repair Pros on Instagram" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#E4405F;color:#fff;text-decoration:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a><a href="https://www.pinterest.com/lapuenteleakrepairpros/" target="_blank" rel="noopener noreferrer" aria-label="La Puente Leak Repair Pros on Pinterest" style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#E60023;color:#fff;text-decoration:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.091.378-.293 1.194-.333 1.361-.052.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.966 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg></a></div>
+</footer>
+
+<a class="mobile-call" href="tel:+16268986169">&#9742; Call Now &middot; (626) 898-6169</a>
+
+<script>
+var menuToggle = document.getElementById("menuToggle");
+var navMenu = document.getElementById("navMenu");
+menuToggle.addEventListener("click", function () {
+  var isOpen = navMenu.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+});
+var dropBtns = document.querySelectorAll(".drop-btn");
+for (var i = 0; i < dropBtns.length; i++) {
+  dropBtns[i].addEventListener("click", function (e) {
+    var li = e.currentTarget.parentElement;
+    var open = li.classList.toggle("open");
+    e.currentTarget.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+}
+document.addEventListener("click", function (e) {
+  var drops = document.querySelectorAll(".has-drop.open");
+  for (var j = 0; j < drops.length; j++) {
+    if (!drops[j].contains(e.target)) {
+      drops[j].classList.remove("open");
+      var b = drops[j].querySelector(".drop-btn");
+      if (b) { b.setAttribute("aria-expanded", "false"); }
+    }
+  }
+});
+</script>
+</body>
+</html>

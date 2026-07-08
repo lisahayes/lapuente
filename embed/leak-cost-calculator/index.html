@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Leak Cost Calculator | La Puente Valley Water Rates</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#fff;color:#1a1a1a;padding:1.2rem}
+h2{font-size:1.1rem;margin-bottom:1rem;color:#132441}
+label{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:#5a5a5a;display:block;margin-bottom:.3rem;font-weight:600}
+input,select{width:100%;border:1px solid #d0d4de;background:#f6f7fa;color:#1a1a1a;padding:.6rem .75rem;border-radius:5px;font-size:.95rem;font-family:inherit;margin-bottom:.9rem}
+input:focus,select:focus{outline:2px solid #D4A95C;outline-offset:1px}
+.row{display:flex;flex-wrap:wrap;gap:.8rem}
+.field{flex:1;min-width:140px}
+.seg{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.8rem}
+.seg button{border:1px solid #d0d4de;background:#f6f7fa;color:#5a5a5a;padding:.38rem .8rem;border-radius:4px;font-size:.85rem;cursor:pointer}
+.seg button.on{background:#D4A95C;color:#0C1830;border-color:#D4A95C;font-weight:700}
+.calc-btn{background:#D4A95C;color:#0C1830;font-weight:700;border:0;padding:.8rem 1.4rem;border-radius:5px;font-size:.95rem;cursor:pointer;width:100%;margin-top:.4rem}
+.calc-btn:hover{background:#B98C3F}
+.result{display:none;margin-top:1rem;background:#f6f7fa;border:1px solid #D4A95C;border-radius:6px;padding:1rem}
+.result.on{display:block}
+.verdict{font-size:1.1rem;font-weight:700;color:#132441;margin-bottom:.5rem}
+.detail{font-size:.88rem;color:#4a4a5a;line-height:1.6}
+.detail p{margin:.4rem 0}
+.powered{font-size:.75rem;color:#999;text-align:center;margin-top:1rem}
+.powered a{color:#D4A95C}
+</style>
+<script>
+function calcLPVCWD(totalCCF){
+  var c=21.08;
+  if(totalCCF<=0)return c;
+  var t1=Math.min(totalCCF,8);
+  var t2=Math.min(Math.max(totalCCF-8,0),6);
+  var t3=Math.max(totalCCF-14,0);
+  return c+(t1*2.16)+(t2*3.34)+(t3*4.49);
+}
+function leakCost(leakCCF){return calcLPVCWD(6+leakCCF)-calcLPVCWD(6);}
+function setDrip(v){document.getElementById("drips").value=v;document.querySelectorAll(".seg button").forEach(function(b){b.classList.toggle("on",b.dataset.v===String(v));});}
+function calcEmbed(){
+  var lt=document.getElementById("leak-type").value;
+  var gpd=0;
+  if(lt==="drip"){
+    var d=parseFloat(document.getElementById("drips").value)||0;
+    gpd=(d*60*24)/15140;
+  }else if(lt==="toilet"){
+    gpd=parseFloat(document.getElementById("toilet-gpd").value)||480;
+  }else if(lt==="trickle"){
+    gpd=(parseFloat(document.getElementById("trickle-gph").value)||0)*24;
+  }else{
+    gpd=(parseFloat(document.getElementById("sprinkler-gph").value)||60)*24;
+  }
+  var count=parseFloat(document.getElementById("fixture-count").value)||1;
+  gpd=gpd*count;
+  if(gpd<=0){
+    document.getElementById("result").className="result on";
+    document.getElementById("verdict").textContent="Enter valid inputs to see the cost.";
+    document.getElementById("detail").innerHTML="";
+    return;
+  }
+  var perMonth=gpd*30.44;
+  var perYear=gpd*365;
+  var ccfM=perMonth/748;
+  var mCost=leakCost(ccfM);
+  var yCost=mCost*12;
+  var bathtubs=Math.round(perYear/36);
+  var tierNote="";
+  if((6+ccfM)>14)tierNote=" Usage may reach Tier 3 ($4.49/CCF).";
+  else if((6+ccfM)>8)tierNote=" Usage may enter Tier 2 ($3.34/CCF).";
+  document.getElementById("result").className="result on";
+  document.getElementById("verdict").textContent="About $"+mCost.toFixed(2)+" per month, $"+Math.round(yCost)+" per year";
+  document.getElementById("detail").innerHTML=
+    "<p>Gallons wasted: "+gpd.toFixed(1)+"/day, "+Math.round(perMonth).toLocaleString()+"/month, "+Math.round(perYear).toLocaleString()+"/year.</p>"+
+    "<p>La Puente Valley Water District bill impact: <strong>$"+mCost.toFixed(2)+"/month</strong> and <strong>$"+Math.round(yCost)+"/year</strong>."+tierNote+"</p>"+
+    "<p>Equivalent to about <strong>"+bathtubs+" bathtubs</strong> of water wasted per year.</p>"+
+    "<p>Sewer note: La Puente sewer (LACSD District 22) is a flat annual property tax charge. It does not change with water use.</p>";
+}
+document.addEventListener("DOMContentLoaded",function(){
+  document.querySelectorAll(".seg button").forEach(function(b){
+    b.addEventListener("click",function(){setDrip(b.dataset.v);});
+  });
+  document.getElementById("leak-type").addEventListener("change",function(){
+    var v=this.value;
+    document.getElementById("drip-row").style.display=v==="drip"?"block":"none";
+    document.getElementById("toilet-row").style.display=v==="toilet"?"block":"none";
+    document.getElementById("trickle-row").style.display=v==="trickle"?"block":"none";
+    document.getElementById("sprinkler-row").style.display=v==="irrigation"?"block":"none";
+  });
+});
+</script>
+</head>
+<body>
+<h2>Leak Cost Calculator</h2>
+<p style="font-size:.85rem;color:#5a5a5a;margin-bottom:1rem">Uses real La Puente Valley County Water District tiered rates (effective July 1, 2025).</p>
+<label for="leak-type">Leak type</label>
+<select id="leak-type">
+  <option value="drip">Dripping faucet</option>
+  <option value="toilet">Running toilet</option>
+  <option value="trickle">Steady trickle or stream</option>
+  <option value="irrigation">Sprinkler or irrigation leak</option>
+</select>
+<div id="drip-row">
+  <label>Drip speed</label>
+  <div class="seg">
+    <button data-v="10">Slow (10/min)</button>
+    <button data-v="60" class="on">Steady (60/min)</button>
+    <button data-v="120">Fast (120/min)</button>
+  </div>
+  <label for="drips">Drips per minute</label>
+  <input type="number" id="drips" value="60" min="1" max="500">
+</div>
+<div id="toilet-row" style="display:none">
+  <label for="toilet-gpd">Gallons per day (default: running toilet 480 gal/day)</label>
+  <input type="number" id="toilet-gpd" value="480" min="1" max="2000">
+</div>
+<div id="trickle-row" style="display:none">
+  <label for="trickle-gph">Gallons per hour</label>
+  <input type="number" id="trickle-gph" value="5" min="0.1" max="500" step="0.1">
+</div>
+<div id="sprinkler-row" style="display:none">
+  <label for="sprinkler-gph">Gallons per hour (default: 60 gal/hr)</label>
+  <input type="number" id="sprinkler-gph" value="60" min="1" max="500">
+</div>
+<label for="fixture-count">Number of leaking fixtures</label>
+<input type="number" id="fixture-count" value="1" min="1" max="20">
+<button class="calc-btn" onclick="calcEmbed()">Calculate my cost</button>
+<div class="result" id="result">
+  <div class="verdict" id="verdict"></div>
+  <div class="detail" id="detail"></div>
+</div>
+<p class="powered">Powered by <a href="https://lapuenteleakrepairpros.com" target="_blank">La Puente Leak Repair Experts</a> | Call <a href="tel:+16268986169">(626) 898-6169</a></p>
+</body>
+</html>
