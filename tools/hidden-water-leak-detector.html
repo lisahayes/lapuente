@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/logo-icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/logo-icon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<title>Hidden Water Leak Detector Tool | La Puente, CA Homes</title>
+<meta name="description" content="Check eight signs of a hidden water leak in your La Puente home and get an honest likelihood verdict with next steps. Free, no signup. (626) 898-6169.">
+<link rel="canonical" href="https://lapuenteleakrepairpros.com/tools/hidden-water-leak-detector">
+<meta property="og:title" content="Hidden Water Leak Detector Tool | La Puente, CA Homes">
+<meta property="og:description" content="Check eight signs of a hidden water leak in your La Puente home and get an honest likelihood verdict with next steps. Free, no signup. (626) 898-6169.">
+<meta property="og:url" content="https://lapuenteleakrepairpros.com/tools/hidden-water-leak-detector">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://lapuenteleakrepairpros.com/images/hero/hero-bg.jpg">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Plumber",
+  "@id": "https://lapuenteleakrepairpros.com/#business",
+  "name": "La Puente Leak Repair Experts",
+  "telephone": "+16268986169",
+  "url": "https://lapuenteleakrepairpros.com/",
+  "image": "https://lapuenteleakrepairpros.com/images/hero/hero-bg.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3107 Lake View Rd",
+    "addressLocality": "La Puente",
+    "addressRegion": "CA",
+    "postalCode": "91744",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.02,
+    "longitude": -117.9495
+  },
+  "areaServed": [
+    "La Puente",
+    "West Covina",
+    "Hacienda Heights",
+    "Baldwin Park",
+    "South El Monte",
+    "Rowland Heights",
+    "Whittier",
+    "Covina"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "00:00",
+      "closes": "23:59"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://lapuenteleakrepairpros.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Free Tools",
+      "item": "https://lapuenteleakrepairpros.com/tools"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Hidden Water Leak Detector",
+      "item": "https://lapuenteleakrepairpros.com/tools/hidden-water-leak-detector"
+    }
+  ]
+}
+</script>
+<script>
+function runDetector() {
+  var weights = {q1: 5, q2: 3, q3: 3, q4: 2, q5: 2, q6: 2, q7: 2, q8: 2};
+  var score = 0;
+  var checked = 0;
+  for (var k in weights) {
+    var el = document.getElementById(k);
+    if (el && el.checked) { score += weights[k]; checked += 1; }
+  }
+  var v = document.getElementById("verdict");
+  var d = document.getElementById("detail");
+  var box = document.getElementById("result");
+  if (checked === 0) {
+    v.textContent = "Nothing checked";
+    d.textContent = "Either your house is behaving or the signs have not been looked for yet. Run the fifteen-minute meter test tonight; it is the single strongest sign on this list and it costs nothing.";
+  } else if (score >= 8 || (document.getElementById("q1").checked && score >= 5)) {
+    v.textContent = "High likelihood of an active hidden leak";
+    d.textContent = "Direct evidence plus corroboration. Close the main valve if water is accumulating anywhere, note which signs you checked, and call now. Signs at this level rarely improve on their own and the damage clock is running.";
+  } else if (score >= 5) {
+    v.textContent = "Elevated likelihood, worth a detection visit";
+    d.textContent = "Multiple corroborating signs without confirmed meter movement. Run the fifteen-minute meter test to upgrade or downgrade this verdict, then call with the result. Detection at this stage is usually a small, cheap appointment.";
+  } else {
+    v.textContent = "Low likelihood so far, keep watching";
+    d.textContent = "One or two soft signs can have innocent explanations. Date-stamp what you observed, run the meter test monthly, and escalate if any sign strengthens or a second one joins it. Early watchers get the cheap repairs.";
+  }
+  box.className = "tool-result show";
+}
+</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="La Puente Leak Repair Experts home">
+      <img src="/images/logo.png"
+           alt="La Puente Leak Repair Experts"
+           class="logo-img"
+           width="220" height="105"
+           loading="eager"
+           decoding="async">
+    </a>
+    <button class="hamburger" id="menuToggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    <ul class="nav-menu" id="navMenu">
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Services <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/services/slab-leak-detection-and-repair">Slab Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/pinhole-leak-detection-and-repair">Pinhole Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/pool-leak-detection-and-repair">Pool Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/foundation-leak-detection-and-repair">Foundation Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/sewer-line-leak-detection-and-repair">Sewer Line Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/water-heater-leak-detection-and-repair">Water Heater Leak Detection &amp; Repair</a></li>
+          <li><a href="/services">View All 43 Services &rarr;</a></li>
+        </ul>
+      </li>
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Service Areas <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/locations/downtown-la-puente">Downtown La Puente</a></li>
+          <li><a href="/locations/old-town-la-puente">Old Town La Puente</a></li>
+          <li><a href="/locations/west-puente-valley">West Puente Valley</a></li>
+          <li><a href="/locations/bassett-la-puente">Bassett</a></li>
+          <li><a href="/locations/west-covina-ca">West Covina</a></li>
+          <li><a href="/locations/hacienda-heights-ca">Hacienda Heights</a></li>
+          <li><a href="/locations">View All 26 Areas &rarr;</a></li>
+        </ul>
+      </li>
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Tools <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/hidden-water-leak-detector">Hidden Leak Detector</a></li>
+          <li><a href="/leak-cost-calculator">Leak Cost Calculator</a></li>
+          <li><a href="/slab-leak-risk-checker">Slab Leak Risk Checker</a></li>
+          <li><a href="/pool-leak-bucket-test">Pool Bucket Test</a></li>
+          <li><a href="/tools">All Free Tools &rarr;</a></li>
+        </ul>
+      </li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a class="nav-phone" href="tel:+16268986169">Call (626) 898-6169</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" style="padding-bottom:1rem">
+  <div class="container" style="max-width:860px">
+    <p class="eyebrow">Free tool &middot; Symptom screener &middot; La Puente, CA</p>
+    <h1>Hidden Water <em>Leak Detector</em></h1>
+    <p class="hero-sub">Hidden leaks announce themselves in fragments: a sound here, a bill there, a smell nobody can place. This screener collects the fragments. Check every sign that applies to your La Puente home right now, and the score converts scattered clues into a likelihood tier with the correct next move. Fragments too urgent for a quiz go straight to <a href="tel:+16268986169">(626) 898-6169</a>.</p>
+  </div>
+</section>
+<section class="section" style="padding-top:1rem">
+  <div class="container" style="max-width:860px">
+    <div class="tool-card">
+      <h2>Check every sign that applies</h2>
+      
+      <div class="tool-check"><input type="checkbox" id="q1"><span>The water meter moves with every fixture in the house turned off (the fifteen-minute test)</span></div>
+      <div class="tool-check"><input type="checkbox" id="q2"><span>A floor area feels warm underfoot for no reason, especially on tile</span></div>
+      <div class="tool-check"><input type="checkbox" id="q3"><span>A hissing or running-water sound comes from a wall or floor when everything is off</span></div>
+      <div class="tool-check"><input type="checkbox" id="q4"><span>The water bill rose noticeably with no change in household habits</span></div>
+      <div class="tool-check"><input type="checkbox" id="q5"><span>A musty or damp smell persists in one room or closet</span></div>
+      <div class="tool-check"><input type="checkbox" id="q6"><span>Paint bubbles, drywall stains, or baseboards swelling anywhere</span></div>
+      <div class="tool-check"><input type="checkbox" id="q7"><span>The water heater runs or cycles at odd hours with no hot water being used</span></div>
+      <div class="tool-check"><input type="checkbox" id="q8"><span>A patch of yard or slab edge stays damp through dry weather</span></div>
+
+      <button class="tool-btn" onclick="runDetector()">Score my signs</button>
+      <div class="tool-result" id="result">
+        <div class="verdict" id="verdict"></div>
+        <p id="detail"></p>
+      </div>
+      <p class="tool-note">Weighted scoring: meter movement counts heaviest because it is direct evidence; the rest are corroboration. Results are planning estimates, not a diagnosis or a bill. For the real answer on your actual pipes, <a href="tel:+16268986169">(626) 898-6169</a> is free to call.</p>
+    </div>
+    <p class="tool-note" style="margin-top:.8rem">Screenshot your result before you call. Telling the dispatcher what the tool showed, and which inputs produced it, routinely saves the first ten minutes of a visit, and <a href="tel:+16268986169">(626) 898-6169</a> is answered by people who read these tools daily.</p>
+  </div>
+</section>
+
+<section class="section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Why these eight signs, in this order</h2>
+    <p>The checklist mirrors how professional triage actually weighs evidence. Meter movement with the house at rest is direct proof of pressurized loss, which is why it carries the heaviest weight and why a checked first box escalates any score. Warm floors and wall hiss are near-direct: physical evidence of water moving where it should not, strongly associated with the hot-side slab and pinhole failures La Puente&rsquo;s boom-era copper produces. The remaining five are corroboration, real signals that earn attention in combination even when each alone has innocent explanations.</p>
+    <p style="margin-top:.9rem">A high score is not a diagnosis; it is a well-founded suspicion, which is exactly what a detection visit converts into a marked point and priced options.</p>
+  </div>
+</section>
+
+<section class="section panel-section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Reading your tier honestly</h2>
+    <p>Low-tier households should resist both panic and complacency: date the observation, keep the monthly meter habit, and let time either clear or convict. Elevated tiers have earned the fifteen-minute test tonight, since one checkbox there reshapes the whole verdict. High tiers should treat the score as a same-week phone call, because every pattern in that tier involves water actively moving, and in this city&rsquo;s slab-on-grade housing, moving water picks its own exit if nobody intervenes.</p>
+    <p style="margin-top:.9rem">Whatever the tier, keep the checked list; telling our dispatcher which signs applied starts the visit with the suspect pool already halved.</p>
+  </div>
+</section>
+
+<section class="section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Where this tool hands off</h2>
+    <p>High and elevated tiers usually land on one of these pages next, and the meter-test post explains the heavyweight sign in full.</p>
+    <div class="area-links" style="margin-top:1rem">
+      <a href="/services/pinpoint-leak-detection">Pinpoint Leak Detection</a>
+      <a href="/services/slab-leak-detection-and-repair">Slab Leak Repair</a>
+      <a href="/services/plumbing-leak-detection-and-repair">Plumbing Leak Repair</a>
+      <a href="/tools/leak-cost-calculator">Leak Cost Calculator</a>
+    </div>
+    <p class="view-all">Every handoff above also fits in one call: <a href="tel:+16268986169">(626) 898-6169</a>, at whatever hour the tool got used.</p>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>Tools estimate. Visits confirm.</h2>
+    <p>Every result above compresses to the same next step when it matters: a located leak and an upfront number.</p>
+    <a class="btn-invert" href="tel:+16268986169">&#9742; Call (626) 898-6169 &middot; 24/7</a>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h3>La Puente Leak Repair Experts</h3>
+        <address class="nap">
+          3107 Lake View Rd<br>
+          La Puente, CA 91744<br>
+          <a href="tel:+16268986169">(626) 898-6169</a><br>
+          Open 24 hours, 7 days a week
+        </address>
+        <p style="margin-top:.7rem;color:var(--muted)">Licensed in California (CSLB). Serving the San Gabriel Valley from the Hub City.</p>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <ul>
+          <li><a href="/services/slab-leak-detection-and-repair">Slab Leak Repair</a></li>
+          <li><a href="/services/pinhole-leak-detection-and-repair">Pinhole Leak Repair</a></li>
+          <li><a href="/services/pool-leak-detection-and-repair">Pool Leak Detection</a></li>
+          <li><a href="/services/sewer-line-leak-detection-and-repair">Sewer Line Leaks</a></li>
+          <li><a href="/services/water-heater-leak-detection-and-repair">Water Heater Leaks</a></li>
+          <li><a href="/services">All 43 Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Service Areas</h3>
+        <ul>
+          <li><a href="/locations/downtown-la-puente">Downtown La Puente</a></li>
+          <li><a href="/locations/west-puente-valley">West Puente Valley</a></li>
+          <li><a href="/locations/bassett-la-puente">Bassett</a></li>
+          <li><a href="/locations/west-covina-ca">West Covina</a></li>
+          <li><a href="/locations/hacienda-heights-ca">Hacienda Heights</a></li>
+          <li><a href="/locations">All 26 Areas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <ul>
+          <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Tools <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/hidden-water-leak-detector">Hidden Leak Detector</a></li>
+          <li><a href="/leak-cost-calculator">Leak Cost Calculator</a></li>
+          <li><a href="/slab-leak-risk-checker">Slab Leak Risk Checker</a></li>
+          <li><a href="/pool-leak-bucket-test">Pool Bucket Test</a></li>
+          <li><a href="/tools">All Free Tools &rarr;</a></li>
+        </ul>
+      </li>
+      <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>&copy; 2026 La Puente Leak Repair Experts</span>
+      <span>La Puente, CA &middot; Los Angeles County &middot; <a href="tel:+16268986169">(626) 898-6169</a></span>
+    </div>
+  </div>
+</footer>
+
+<a class="mobile-call" href="tel:+16268986169">&#9742; Call Now &middot; (626) 898-6169</a>
+
+<script>
+var menuToggle = document.getElementById("menuToggle");
+var navMenu = document.getElementById("navMenu");
+menuToggle.addEventListener("click", function () {
+  var isOpen = navMenu.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+});
+var dropBtns = document.querySelectorAll(".drop-btn");
+for (var i = 0; i < dropBtns.length; i++) {
+  dropBtns[i].addEventListener("click", function (e) {
+    var li = e.currentTarget.parentElement;
+    var open = li.classList.toggle("open");
+    e.currentTarget.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+}
+document.addEventListener("click", function (e) {
+  var drops = document.querySelectorAll(".has-drop.open");
+  for (var j = 0; j < drops.length; j++) {
+    if (!drops[j].contains(e.target)) {
+      drops[j].classList.remove("open");
+      var b = drops[j].querySelector(".drop-btn");
+      if (b) { b.setAttribute("aria-expanded", "false"); }
+    }
+  }
+});
+</script>
+</body>
+</html>

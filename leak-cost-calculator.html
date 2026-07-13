@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/logo-icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/logo-icon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<title>Leak Cost Calculator | La Puente CA Drip and Toilet</title>
+<meta name="description" content="See what a faucet drip or running toilet costs on real La Puente Valley Water tiered rates. Sewer is a flat annual property tax charge, not a volumetric fee.">
+<link rel="canonical" href="https://lapuenteleakrepairpros.com/leak-cost-calculator">
+<meta property="og:title" content="Leak Cost Calculator | La Puente CA Drip and Toilet">
+<meta property="og:description" content="See what a faucet drip or running toilet costs on real La Puente Valley Water tiered rates. Sewer is a flat annual property tax charge, not a volumetric fee.">
+<meta property="og:url" content="https://lapuenteleakrepairpros.com/leak-cost-calculator">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://lapuenteleakrepairpros.com/images/hero/hero-bg.jpg">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Plumber",
+  "@id": "https://lapuenteleakrepairpros.com/#business",
+  "name": "La Puente Leak Repair Experts",
+  "telephone": "+16268986169",
+  "url": "https://lapuenteleakrepairpros.com/",
+  "image": "https://lapuenteleakrepairpros.com/images/hero/hero-bg.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3107 Lake View Rd",
+    "addressLocality": "La Puente",
+    "addressRegion": "CA",
+    "postalCode": "91744",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.02,
+    "longitude": -117.9495
+  },
+  "areaServed": [
+    "La Puente",
+    "West Covina",
+    "Hacienda Heights",
+    "Baldwin Park",
+    "South El Monte",
+    "Rowland Heights",
+    "Whittier",
+    "Covina"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "00:00",
+      "closes": "23:59"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://lapuenteleakrepairpros.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "How Much Is That Leak Costing You? (La P",
+      "item": "https://lapuenteleakrepairpros.com/leak-cost-calculator"
+    }
+  ]
+}
+</script>
+<script>
+
+function calcLPVCWD(totalCCF) {
+  var c = 21.08;
+  if (totalCCF <= 0) return c;
+  var t1 = Math.min(totalCCF, 8);
+  var t2 = Math.min(Math.max(totalCCF - 8, 0), 6);
+  var t3 = Math.max(totalCCF - 14, 0);
+  return c + (t1 * 2.16) + (t2 * 3.34) + (t3 * 4.49);
+}
+function leakCostMonth(leakCCF) {
+  return calcLPVCWD(6 + leakCCF) - calcLPVCWD(6);
+}
+
+function setLeakType(type) {
+  var rows = ["drip-row", "toilet-row", "trickle-row", "irrigation-row"];
+  rows.forEach(function(id) {
+    document.getElementById(id).style.display = "none";
+  });
+  document.getElementById(type + "-row").style.display = "block";
+}
+
+function setDripSpeed(val) {
+  document.getElementById("drips-pm").value = val;
+  document.querySelectorAll(".drip-btn").forEach(function(b) {
+    b.classList.toggle("active", b.dataset.val === String(val));
+  });
+}
+
+function calcCost() {
+  var lt    = document.getElementById("lc-type").value;
+  var count = parseFloat(document.getElementById("lc-count").value) || 1;
+  var gpd   = 0;
+
+  if (lt === "drip") {
+    var d = parseFloat(document.getElementById("drips-pm").value) || 0;
+    gpd = (d * 60 * 24) / 15140;
+  } else if (lt === "toilet") {
+    gpd = parseFloat(document.getElementById("toilet-gpd").value) || 480;
+  } else if (lt === "trickle") {
+    gpd = (parseFloat(document.getElementById("trickle-gph").value) || 0) * 24;
+  } else {
+    gpd = (parseFloat(document.getElementById("irr-gph").value) || 60) * 24;
+  }
+
+  gpd = gpd * count;
+
+  var box     = document.getElementById("result-box");
+  var verdict = document.getElementById("result-verdict");
+  var body    = document.getElementById("result-body");
+
+  if (gpd <= 0) {
+    verdict.textContent = "Enter valid inputs to see the cost.";
+    body.innerHTML = "";
+    box.className = "result-box visible";
+    return;
+  }
+
+  var perMonth = gpd * 30.44;
+  var perYear  = gpd * 365;
+  var ccfM     = perMonth / 748;
+  var mCost    = leakCostMonth(ccfM);
+  var yCost    = mCost * 12;
+  var bathtubs = Math.round(perYear / 36);
+
+  var tierNote = "";
+  if ((6 + ccfM) > 14) {
+    tierNote = " Your total usage likely reaches Tier 3 ($4.49/CCF) at this leak rate.";
+  } else if ((6 + ccfM) > 8) {
+    tierNote = " Your total usage may enter Tier 2 ($3.34/CCF) at this leak rate. LPVCWD uses tiered pricing to encourage conservation.";
+  }
+
+  var irrigNote = (lt === "irrigation")
+    ? "<div class='note-box'><strong>Outdoor leak note</strong>Irrigation leaks drain to the yard, not the sewer. La Puente sewer is a flat annual property tax charge and is not affected by outdoor water use.</div>"
+    : "";
+
+  verdict.textContent = "About $" + mCost.toFixed(2) + " per month, $" + Math.round(yCost).toLocaleString() + " per year";
+  body.innerHTML =
+    "<p>Gallons wasted: <strong>" + gpd.toFixed(1) + " per day</strong>, " +
+    Math.round(perMonth).toLocaleString() + " per month, " +
+    Math.round(perYear).toLocaleString() + " per year.</p>" +
+    "<p>La Puente Valley Water District bill impact: <strong>$" + mCost.toFixed(2) + "/month</strong> and <strong>$" +
+    Math.round(yCost).toLocaleString() + "/year</strong>." + tierNote + "</p>" +
+    "<p>That is roughly <strong>" + bathtubs + " bathtubs</strong> of water wasted every year.</p>" +
+    "<div class='note-box'><strong>Sewer reassurance</strong>" +
+    "La Puente sewer (LACSD District 22) is a flat annual charge on your LA County property tax bill. " +
+    "It does not change based on how much water you use, indoors or out.</div>" +
+    irrigNote;
+
+  box.className = "result-box visible";
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("lc-type").addEventListener("change", function() {
+    setLeakType(this.value);
+  });
+  document.querySelectorAll(".drip-btn").forEach(function(b) {
+    b.addEventListener("click", function() {
+      setDripSpeed(b.dataset.val);
+    });
+  });
+});
+
+</script>
+<style>
+.steps-list{padding-left:1.3rem;margin:.8rem 0 1.2rem}
+.steps-list li{margin:.5rem 0;color:var(--text-soft);font-size:.95rem}
+.tool-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);padding:1.5rem;margin:1.4rem 0}
+.tool-row{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1rem}
+.tool-field{display:flex;flex-direction:column;gap:.35rem;min-width:180px;flex:1}
+.tool-field label{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.tool-field input,.tool-field select{background:var(--primary-dark);border:1px solid var(--line);color:var(--text);padding:.6rem .75rem;border-radius:5px;font-size:.95rem;font-family:inherit}
+.tool-field input:focus,.tool-field select:focus{outline:2px solid var(--gold);outline-offset:1px}
+.tool-field input[type=number]{max-width:160px}
+.btn-calc{background:var(--gold);color:var(--gold-ink);font-family:Georgia,serif;font-weight:700;border:0;padding:.9rem 1.8rem;border-radius:5px;font-size:1rem;cursor:pointer;margin-top:.6rem;letter-spacing:.02em}
+.btn-calc:hover{background:var(--gold-dark)}
+.result-box{display:none;margin-top:1.3rem;background:var(--primary-dark);border:1px solid var(--gold);border-radius:var(--radius);padding:1.2rem 1.4rem}
+.result-box.visible{display:block}
+.result-verdict{font-family:Georgia,serif;font-size:1.3rem;color:var(--gold);margin-bottom:.5rem}
+.result-body{font-size:.93rem;color:var(--text-soft);line-height:1.65}
+.result-body p{margin:.55rem 0}
+.note-box{border-left:3px solid var(--gold);background:var(--primary-darkest);border-radius:0 5px 5px 0;padding:.8rem 1rem;margin:.9rem 0;font-size:.88rem;color:var(--text-soft)}
+.note-box strong{color:var(--gold);display:block;margin-bottom:.3rem}
+.progress-wrap{background:var(--primary-darkest);border-radius:20px;height:12px;margin:.6rem 0 1rem;overflow:hidden}
+.progress-fill{height:100%;border-radius:20px;background:var(--gold);transition:width .3s ease;width:0%}
+.score-display{font-family:Georgia,serif;font-size:1.15rem;color:var(--text-soft);margin-bottom:.3rem}
+.risk-item{display:flex;align-items:flex-start;gap:.7rem;padding:.6rem 0;border-bottom:1px solid var(--line);font-size:.93rem;color:var(--text-soft)}
+.risk-item:last-child{border-bottom:0}
+.risk-item input[type=checkbox]{width:1.15rem;height:1.15rem;margin-top:.2rem;flex-shrink:0;accent-color:var(--gold);cursor:pointer}
+.risk-label{flex:1;line-height:1.5}
+.risk-weight{font-size:.78rem;color:var(--muted);margin-left:.3rem;white-space:nowrap}
+.seg-btns{display:flex;flex-wrap:wrap;gap:.5rem;margin:.4rem 0 .8rem}
+.seg-btn{background:var(--primary-dark);border:1px solid var(--line);color:var(--text-soft);padding:.4rem .9rem;border-radius:5px;font-size:.88rem;cursor:pointer}
+.seg-btn.active,.seg-btn:hover{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+.faq-section h2{margin-bottom:1rem}
+.faq-item{border-bottom:1px solid var(--line);padding:.9rem 0}
+.faq-item h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
+.faq-item p{font-size:.93rem;color:var(--text-soft);line-height:1.6}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does a dripping faucet cost per year in La Puente?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A faucet dripping at 60 drips per minute loses about 5.7 gallons per day, or roughly 2,080 gallons per year. At La Puente Valley Water District Tier 1 rates of $2.16 per CCF, that works out to approximately $6 per year, which sounds small. A faster drip at 120 drips per minute doubles that, and a fully running faucet is in a different category entirely. The calculator above shows the real number for your specific drip rate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does a water leak raise sewer bills in La Puente?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. La Puente sewer service is billed by the Los Angeles County Sanitation Districts as a flat annual fee on your LA County property tax bill. It is not based on how much water you use. An indoor leak, an outdoor irrigation leak, or a pool refill all appear only on your LPVCWD water bill, never on a separate volumetric sewer charge."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are La Puente Valley Water District rates?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Effective July 1, 2025, LPVCWD single-family residential rates include a monthly service charge of $21.08 plus volumetric tiers: Tier 1 at $2.16 per CCF for the first 8 CCF per month, Tier 2 at $3.34 per CCF for 9 to 14 CCF, and Tier 3 at $4.49 per CCF for 15 CCF and above. One CCF equals 748 gallons. Rates are set to step up again on July 1, 2026."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does La Puente have tiered water pricing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LPVCWD uses a tiered rate structure to encourage conservation. Households that use less water in the lower tiers pay a lower rate per unit. A leak that pushes monthly use above 8 CCF or 14 CCF moves the household into a higher tier, where every additional gallon costs more. The calculator shows when a leak is large enough to trigger a tier jump."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="La Puente Leak Repair Experts home">
+      <img src="/images/logo.png"
+           alt="La Puente Leak Repair Experts"
+           class="logo-img"
+           width="220" height="105"
+           loading="eager"
+           decoding="async">
+    </a>
+    <button class="hamburger" id="menuToggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    <ul class="nav-menu" id="navMenu">
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Services <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/services/slab-leak-detection-and-repair">Slab Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/pinhole-leak-detection-and-repair">Pinhole Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/pool-leak-detection-and-repair">Pool Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/foundation-leak-detection-and-repair">Foundation Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/sewer-line-leak-detection-and-repair">Sewer Line Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/water-heater-leak-detection-and-repair">Water Heater Leak Detection &amp; Repair</a></li>
+          <li><a href="/services">View All 43 Services &rarr;</a></li>
+        </ul>
+      </li>
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Service Areas <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/locations/downtown-la-puente">Downtown La Puente</a></li>
+          <li><a href="/locations/old-town-la-puente">Old Town La Puente</a></li>
+          <li><a href="/locations/west-puente-valley">West Puente Valley</a></li>
+          <li><a href="/locations/bassett-la-puente">Bassett</a></li>
+          <li><a href="/locations/west-covina-ca">West Covina</a></li>
+          <li><a href="/locations/hacienda-heights-ca">Hacienda Heights</a></li>
+          <li><a href="/locations">View All 26 Areas &rarr;</a></li>
+        </ul>
+      </li>
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Tools <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/hidden-water-leak-detector">Hidden Leak Detector</a></li>
+          <li><a href="/leak-cost-calculator">Leak Cost Calculator</a></li>
+          <li><a href="/slab-leak-risk-checker">Slab Leak Risk Checker</a></li>
+          <li><a href="/pool-leak-bucket-test">Pool Bucket Test</a></li>
+          <li><a href="/tools">All Free Tools &rarr;</a></li>
+        </ul>
+      </li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a class="nav-phone" href="tel:+16268986169">Call (626) 898-6169</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" style="padding-bottom:1rem">
+  <div class="container" style="max-width:860px">
+    <p class="eyebrow">Free tool &middot; Water leak cost &middot; La Puente, CA</p>
+    <h1>How Much Is That Leak Costing You? (La Puente Valley Water Rates)</h1>
+    <p class="hero-sub">Most online drip calculators use a generic national water rate. This one uses La Puente Valley County Water District tiered rates effective July 1, 2025. It shows water cost only, because La Puente sewer is a flat annual property tax charge that does not vary with usage, so a <a href="/services/faucet-leak-detection-and-repair">faucet leak</a> or <a href="/services/toilet-leak-detection-and-repair">running toilet</a> adds only to your water bill.</p>
+    <p style="margin-top:.9rem;font-size:.95rem">Questions while testing? <a href="tel:+16268986169">(626) 898-6169</a> walks you through the meter over the phone at any hour.</p>
+  </div>
+</section>
+
+<section class="section" style="padding:2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Calculate your leak cost</h2>
+    <div class="tool-box">
+      
+      <div class="tool-row">
+        <div class="tool-field">
+          <label for="lc-type">Leak type</label>
+          <select id="lc-type">
+            <option value="drip" selected>Dripping faucet</option>
+            <option value="toilet">Running toilet</option>
+            <option value="trickle">Steady trickle or stream</option>
+            <option value="irrigation">Sprinkler or irrigation leak</option>
+          </select>
+        </div>
+        <div class="tool-field">
+          <label for="lc-count">Number of leaking fixtures</label>
+          <input type="number" id="lc-count" value="1" min="1" max="20">
+        </div>
+      </div>
+      <div id="drip-row">
+        <label style="font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600">Drip speed</label>
+        <div class="seg-btns" style="margin:.4rem 0 .7rem">
+          <button class="seg-btn drip-btn" data-val="10">Slow (10/min)</button>
+          <button class="seg-btn drip-btn active" data-val="60">Steady (60/min)</button>
+          <button class="seg-btn drip-btn" data-val="120">Fast (120/min)</button>
+        </div>
+        <div class="tool-row">
+          <div class="tool-field">
+            <label for="drips-pm">Drips per minute</label>
+            <input type="number" id="drips-pm" value="60" min="1" max="1000">
+          </div>
+        </div>
+      </div>
+      <div id="toilet-row" style="display:none">
+        <div class="tool-row">
+          <div class="tool-field">
+            <label for="toilet-gpd">Gallons per day (running toilet default: 480)</label>
+            <input type="number" id="toilet-gpd" value="480" min="1" max="2000">
+          </div>
+        </div>
+      </div>
+      <div id="trickle-row" style="display:none">
+        <div class="tool-row">
+          <div class="tool-field">
+            <label for="trickle-gph">Gallons per hour</label>
+            <input type="number" id="trickle-gph" value="5" min="0.1" max="500" step="0.1">
+          </div>
+        </div>
+      </div>
+      <div id="irrigation-row" style="display:none">
+        <div class="tool-row">
+          <div class="tool-field">
+            <label for="irr-gph">Gallons per hour (sprinkler/irrigation, default 60)</label>
+            <input type="number" id="irr-gph" value="60" min="1" max="500">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-calc" onclick="calcCost()">Calculate my annual cost</button>
+      <div class="result-box" id="result-box">
+        <div class="result-verdict" id="result-verdict"></div>
+        <div class="result-body" id="result-body"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Why local rates matter for your calculation</h2>
+    <p style="margin-top:0">Generic national calculators often use an average rate around $0.004 per gallon. LPVCWD Tier 1 works out to about $0.0029 per gallon, which is lower. That difference matters for how alarming or reassuring the result looks. The honest local picture is that LPVCWD rates are relatively modest compared to many Southern California utilities, but the volume of water a running toilet or sprinkler leak wastes over a year still adds up, especially if the leak pushes monthly usage into Tier 2 or Tier 3.</p><p style="margin-top:.9rem">The other local fact worth knowing: <a href="/services/irrigation-leak-detection-and-repair">irrigation leaks</a> and <a href="/services/sprinkler-system-leak-detection-and-repair">sprinkler leaks</a> are common in La Puente&rsquo;s year-round growing climate, and because outdoor water drains to the yard rather than the sewer, there is no sewer component to an outdoor leak cost at all. Read the <a href="/blog/high-water-bill-troubleshooting-order">high water bill triage post</a> for the full step-by-step investigation order, from toilets through meter test through irrigation isolation.</p>
+  </div>
+</section>
+
+
+<section class="section panel-section faq-section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>La Puente water cost questions</h2>
+    
+    <div class="faq-item">
+      <h3>How much does a dripping faucet cost per year in La Puente?</h3>
+      <p>A faucet dripping at 60 drips per minute loses about 5.7 gallons per day, or roughly 2,080 gallons per year. At La Puente Valley Water District Tier 1 rates of $2.16 per CCF, that works out to approximately $6 per year, which sounds small. A faster drip at 120 drips per minute doubles that, and a fully running faucet is in a different category entirely. The calculator above shows the real number for your specific drip rate.</p>
+    </div>
+    
+    <div class="faq-item">
+      <h3>Does a water leak raise sewer bills in La Puente?</h3>
+      <p>No. La Puente sewer service is billed by the Los Angeles County Sanitation Districts as a flat annual fee on your LA County property tax bill. It is not based on how much water you use. An indoor leak, an outdoor irrigation leak, or a pool refill all appear only on your LPVCWD water bill, never on a separate volumetric sewer charge.</p>
+    </div>
+    
+    <div class="faq-item">
+      <h3>What are La Puente Valley Water District rates?</h3>
+      <p>Effective July 1, 2025, LPVCWD single-family residential rates include a monthly service charge of $21.08 plus volumetric tiers: Tier 1 at $2.16 per CCF for the first 8 CCF per month, Tier 2 at $3.34 per CCF for 9 to 14 CCF, and Tier 3 at $4.49 per CCF for 15 CCF and above. One CCF equals 748 gallons. Rates are set to step up again on July 1, 2026.</p>
+    </div>
+    
+    <div class="faq-item">
+      <h3>Why does La Puente have tiered water pricing?</h3>
+      <p>LPVCWD uses a tiered rate structure to encourage conservation. Households that use less water in the lower tiers pay a lower rate per unit. A leak that pushes monthly use above 8 CCF or 14 CCF moves the household into a higher tier, where every additional gallon costs more. The calculator shows when a leak is large enough to trigger a tier jump.</p>
+    </div>
+    
+    <p style="margin-top:1rem;font-size:.9rem">Have a question not answered here? Call <a href="tel:+16268986169">(626) 898-6169</a> any time.</p>
+  </div>
+</section>
+
+<section class="section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Related services and further reading</h2>
+    <p>A high leak cost estimate from this tool usually points to one of the following service pages as the likely source.</p>
+    <div class="area-links" style="margin-top:.9rem">
+      <a href="/services/faucet-leak-detection-and-repair">Faucet Leak Repair</a><a href="/services/toilet-leak-detection-and-repair">Toilet Leak Repair</a><a href="/services/irrigation-leak-detection-and-repair">Irrigation Leak Repair</a><a href="/services/sprinkler-system-leak-detection-and-repair">Sprinkler System Leak Repair</a><a href="/blog/high-water-bill-troubleshooting-order">High Water Bill Triage</a>
+    </div>
+    <p class="view-all" style="margin-top:1rem">Rather talk to someone now? <a href="tel:+16268986169">(626) 898-6169</a> is answered 24 hours a day, 7 days a week.</p>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>Tool gives the estimate. We give the answer.</h2>
+    <p>Professional acoustic, electronic, and thermal detection located to the inch, priced before anything opens. Call any hour.</p>
+    <a class="btn-invert" href="tel:+16268986169">&#9742; Call (626) 898-6169 &middot; 24/7</a>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h3>La Puente Leak Repair Experts</h3>
+        <address class="nap">
+          3107 Lake View Rd<br>
+          La Puente, CA 91744<br>
+          <a href="tel:+16268986169">(626) 898-6169</a><br>
+          Open 24 hours, 7 days a week
+        </address>
+        <p style="margin-top:.7rem;color:var(--muted)">Licensed in California (CSLB). Serving the San Gabriel Valley from the Hub City.</p>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <ul>
+          <li><a href="/services/slab-leak-detection-and-repair">Slab Leak Repair</a></li>
+          <li><a href="/services/pinhole-leak-detection-and-repair">Pinhole Leak Repair</a></li>
+          <li><a href="/services/pool-leak-detection-and-repair">Pool Leak Detection</a></li>
+          <li><a href="/services/sewer-line-leak-detection-and-repair">Sewer Line Leaks</a></li>
+          <li><a href="/services/water-heater-leak-detection-and-repair">Water Heater Leaks</a></li>
+          <li><a href="/services">All 43 Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Service Areas</h3>
+        <ul>
+          <li><a href="/locations/downtown-la-puente">Downtown La Puente</a></li>
+          <li><a href="/locations/west-puente-valley">West Puente Valley</a></li>
+          <li><a href="/locations/bassett-la-puente">Bassett</a></li>
+          <li><a href="/locations/west-covina-ca">West Covina</a></li>
+          <li><a href="/locations/hacienda-heights-ca">Hacienda Heights</a></li>
+          <li><a href="/locations">All 26 Areas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <ul>
+          <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Tools <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/hidden-water-leak-detector">Hidden Leak Detector</a></li>
+          <li><a href="/leak-cost-calculator">Leak Cost Calculator</a></li>
+          <li><a href="/slab-leak-risk-checker">Slab Leak Risk Checker</a></li>
+          <li><a href="/pool-leak-bucket-test">Pool Bucket Test</a></li>
+          <li><a href="/tools">All Free Tools &rarr;</a></li>
+        </ul>
+      </li>
+      <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>&copy; 2026 La Puente Leak Repair Experts</span>
+      <span>La Puente, CA &middot; Los Angeles County &middot; <a href="tel:+16268986169">(626) 898-6169</a></span>
+    </div>
+  </div>
+</footer>
+
+<a class="mobile-call" href="tel:+16268986169">&#9742; Call Now &middot; (626) 898-6169</a>
+
+<script>
+var menuToggle = document.getElementById("menuToggle");
+var navMenu = document.getElementById("navMenu");
+menuToggle.addEventListener("click", function () {
+  var isOpen = navMenu.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+});
+var dropBtns = document.querySelectorAll(".drop-btn");
+for (var i = 0; i < dropBtns.length; i++) {
+  dropBtns[i].addEventListener("click", function (e) {
+    var li = e.currentTarget.parentElement;
+    var open = li.classList.toggle("open");
+    e.currentTarget.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+}
+document.addEventListener("click", function (e) {
+  var drops = document.querySelectorAll(".has-drop.open");
+  for (var j = 0; j < drops.length; j++) {
+    if (!drops[j].contains(e.target)) {
+      drops[j].classList.remove("open");
+      var b = drops[j].querySelector(".drop-btn");
+      if (b) { b.setAttribute("aria-expanded", "false"); }
+    }
+  }
+});
+</script>
+</body>
+</html>

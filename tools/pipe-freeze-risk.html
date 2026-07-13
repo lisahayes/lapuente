@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/logo-icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/logo-icon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<title>Pipe Freeze Risk Tool | La Puente, CA Honest Answer</title>
+<meta name="description" content="An honest pipe freeze risk check for La Puente's mild winters: enter tonight's low and your pipe exposure for a real verdict. (626) 898-6169.">
+<link rel="canonical" href="https://lapuenteleakrepairpros.com/tools/pipe-freeze-risk">
+<meta property="og:title" content="Pipe Freeze Risk Tool | La Puente, CA Honest Answer">
+<meta property="og:description" content="An honest pipe freeze risk check for La Puente's mild winters: enter tonight's low and your pipe exposure for a real verdict. (626) 898-6169.">
+<meta property="og:url" content="https://lapuenteleakrepairpros.com/tools/pipe-freeze-risk">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://lapuenteleakrepairpros.com/images/hero/hero-bg.jpg">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Plumber",
+  "@id": "https://lapuenteleakrepairpros.com/#business",
+  "name": "La Puente Leak Repair Experts",
+  "telephone": "+16268986169",
+  "url": "https://lapuenteleakrepairpros.com/",
+  "image": "https://lapuenteleakrepairpros.com/images/hero/hero-bg.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3107 Lake View Rd",
+    "addressLocality": "La Puente",
+    "addressRegion": "CA",
+    "postalCode": "91744",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.02,
+    "longitude": -117.9495
+  },
+  "areaServed": [
+    "La Puente",
+    "West Covina",
+    "Hacienda Heights",
+    "Baldwin Park",
+    "South El Monte",
+    "Rowland Heights",
+    "Whittier",
+    "Covina"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "00:00",
+      "closes": "23:59"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://lapuenteleakrepairpros.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Free Tools",
+      "item": "https://lapuenteleakrepairpros.com/tools"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Pipe Freeze Risk Tool",
+      "item": "https://lapuenteleakrepairpros.com/tools/pipe-freeze-risk"
+    }
+  ]
+}
+</script>
+<script>
+function runFreeze() {
+  var low = parseFloat(document.getElementById("lowtemp").value);
+  var expo = parseFloat(document.getElementById("expo").value) || 0;
+  var v = document.getElementById("verdict");
+  var d = document.getElementById("detail");
+  var box = document.getElementById("result");
+  if (isNaN(low)) {
+    v.textContent = "Enter a forecast low";
+    d.textContent = "Any weather app has tonight&rsquo;s number for La Puente. Type it in and the tool does the honesty.";
+  } else if (low >= 37) {
+    v.textContent = "No freeze risk tonight";
+    d.textContent = "At " + low + " degrees, water in pipes is not freezing anywhere on your property, exposed or not. This is the verdict most La Puente nights earn all winter. If a pipe bursts tonight, blame age or pressure, not the weather, and the line below still answers.";
+  } else if (low >= 32) {
+    v.textContent = "Frost possible, pipe damage very unlikely";
+    d.textContent = "A brief dip near freezing can frost the lawn without threatening pipes; damage needs hours of hard freeze that this forecast does not deliver. If your exposed item is pool equipment, running the pump during the coldest hours is cheap insurance. Nothing else is warranted.";
+  } else if (low >= 27 || expo <= 1) {
+    v.textContent = "Modest risk at exposed points only";
+    d.textContent = "A genuinely cold night for this valley. Fully exposed hardware, hose bibs with hoses still attached, uninsulated pool equipment, exposed risers, earns five minutes of care: disconnect hoses, run pool circulation overnight, and let a distant faucet drip if a run crosses an unheated attic. Interior plumbing remains fine.";
+  } else {
+    v.textContent = "Elevated risk for exposed runs, rare event";
+    d.textContent = "Lows like this are exceptional here and worth taking seriously at every exposed point: hoses off, bibs covered, pool equipment circulating, a trickle on any line crossing unheated space. If a hard-freeze night does find a victim, shut the main before thaw, since the burst usually shows itself when the ice releases.";
+  }
+  box.className = "tool-result show";
+}
+</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="La Puente Leak Repair Experts home">
+      <img src="/images/logo.png"
+           alt="La Puente Leak Repair Experts"
+           class="logo-img"
+           width="220" height="105"
+           loading="eager"
+           decoding="async">
+    </a>
+    <button class="hamburger" id="menuToggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    <ul class="nav-menu" id="navMenu">
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Services <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/services/slab-leak-detection-and-repair">Slab Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/pinhole-leak-detection-and-repair">Pinhole Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/pool-leak-detection-and-repair">Pool Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/foundation-leak-detection-and-repair">Foundation Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/sewer-line-leak-detection-and-repair">Sewer Line Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/water-heater-leak-detection-and-repair">Water Heater Leak Detection &amp; Repair</a></li>
+          <li><a href="/services">View All 43 Services &rarr;</a></li>
+        </ul>
+      </li>
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Service Areas <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/locations/downtown-la-puente">Downtown La Puente</a></li>
+          <li><a href="/locations/old-town-la-puente">Old Town La Puente</a></li>
+          <li><a href="/locations/west-puente-valley">West Puente Valley</a></li>
+          <li><a href="/locations/bassett-la-puente">Bassett</a></li>
+          <li><a href="/locations/west-covina-ca">West Covina</a></li>
+          <li><a href="/locations/hacienda-heights-ca">Hacienda Heights</a></li>
+          <li><a href="/locations">View All 26 Areas &rarr;</a></li>
+        </ul>
+      </li>
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Tools <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/hidden-water-leak-detector">Hidden Leak Detector</a></li>
+          <li><a href="/leak-cost-calculator">Leak Cost Calculator</a></li>
+          <li><a href="/slab-leak-risk-checker">Slab Leak Risk Checker</a></li>
+          <li><a href="/pool-leak-bucket-test">Pool Bucket Test</a></li>
+          <li><a href="/tools">All Free Tools &rarr;</a></li>
+        </ul>
+      </li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a class="nav-phone" href="tel:+16268986169">Call (626) 898-6169</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" style="padding-bottom:1rem">
+  <div class="container" style="max-width:860px">
+    <p class="eyebrow">Free tool &middot; Climate honesty &middot; La Puente, CA</p>
+    <h1>Pipe Freeze <em>Risk Check</em></h1>
+    <p class="hero-sub">Here is a tool built to tell most of its users to relax. La Puente&rsquo;s hot-summer Mediterranean climate delivers winter nights in the forties far more often than frost, and burst-by-freezing is a rare event on this valley floor. For the occasional frost advisory, a traveling household, or pure curiosity, enter tonight&rsquo;s low and your most exposed pipe. Everything else freezing-adjacent belongs to <a href="tel:+16268986169">(626) 898-6169</a>.</p>
+  </div>
+</section>
+<section class="section" style="padding-top:1rem">
+  <div class="container" style="max-width:860px">
+    <div class="tool-card">
+      <h2>Check tonight&rsquo;s actual risk</h2>
+      
+      <div class="tool-row">
+        <div class="tool-field">
+          <label for="lowtemp">Forecast overnight low (&deg;F)</label>
+          <input type="number" id="lowtemp" min="10" max="70" value="44">
+        </div>
+        <div class="tool-field">
+          <label for="expo">Most exposed water pipe on the property</label>
+          <select id="expo">
+            <option value="3" selected>Fully exposed outdoors (bib stub, pool equipment, exposed riser)</option>
+            <option value="2">Unheated garage, attic, or crawl space run</option>
+            <option value="1">Exterior wall, insulated</option>
+            <option value="0">Everything interior and insulated</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="tool-btn" onclick="runFreeze()">Check the risk</button>
+      <div class="tool-result" id="result">
+        <div class="verdict" id="verdict"></div>
+        <p id="detail"></p>
+      </div>
+      <p class="tool-note">Thresholds reflect that damage requires sustained hard freezing, not a brief touch of frost. Coastal-valley Southern California pipes fail from age and pressure, not usually from ice. Results are planning estimates, not a diagnosis or a bill. For the real answer on your actual pipes, <a href="tel:+16268986169">(626) 898-6169</a> is free to call.</p>
+    </div>
+    <p class="tool-note" style="margin-top:.8rem">Screenshot your result before you call. Telling the dispatcher what the tool showed, and which inputs produced it, routinely saves the first ten minutes of a visit, and <a href="tel:+16268986169">(626) 898-6169</a> is answered by people who read these tools daily.</p>
+  </div>
+</section>
+
+<section class="section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Why this tool mostly says relax, on purpose</h2>
+    <p>Freeze-burst tools written for national audiences terrify Southern Californians every December, so this one is calibrated to the actual climate: La Puente&rsquo;s winter lows sit in the forties most nights, frost is occasional, and the sustained hard freezes that burst plumbing are genuinely rare on the valley floor. Water damage here overwhelmingly arrives through the routes the rest of this site documents, aging copper, pressure, connections, and a tool that pretends otherwise would be selling weather anxiety this ZIP code does not stock.</p>
+    <p style="margin-top:.9rem">The rare cold snap does deserve its five minutes, and the thresholds above hand them out honestly: exposed hardware first, interior plumbing almost never.</p>
+  </div>
+</section>
+
+<section class="section panel-section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>The freeze-adjacent problems that are real here</h2>
+    <p>Two winter patterns do earn attention in this climate. First, pool equipment: an uncommanded freeze night with the pump idle can ice the exposed loops at the pad, which is why the run-the-circulation advice appears in the colder verdicts. Second, the reveal effect: cold snaps drop pressure-side temperatures enough to shrink marginal fittings and aging valve packings, and a joint that has been borderline all year sometimes announces itself the morning after the coldest night, wearing a freeze costume over an age problem.</p>
+    <p style="margin-top:.9rem">Both patterns end at the same place every leak does: located, priced, and fixed once, whatever the thermometer was doing at the time.</p>
+  </div>
+</section>
+
+<section class="section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Where this tool hands off</h2>
+    <p>Cold-morning discoveries usually belong to these pages, whatever the weather gets blamed for.</p>
+    <div class="area-links" style="margin-top:1rem">
+      <a href="/services/hose-bib-leak-detection-and-repair">Hose Bib Leak Repair</a>
+      <a href="/services/pipe-leak-detection-and-repair">Pipe Leak Repair</a>
+      <a href="/services/pool-leak-detection-and-repair">Pool Leak Detection</a>
+      <a href="/tools/slab-leak-risk-checker">Slab Leak Risk Checker</a>
+    </div>
+    <p class="view-all">Every handoff above also fits in one call: <a href="tel:+16268986169">(626) 898-6169</a>, at whatever hour the tool got used.</p>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>Tools estimate. Visits confirm.</h2>
+    <p>Every result above compresses to the same next step when it matters: a located leak and an upfront number.</p>
+    <a class="btn-invert" href="tel:+16268986169">&#9742; Call (626) 898-6169 &middot; 24/7</a>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h3>La Puente Leak Repair Experts</h3>
+        <address class="nap">
+          3107 Lake View Rd<br>
+          La Puente, CA 91744<br>
+          <a href="tel:+16268986169">(626) 898-6169</a><br>
+          Open 24 hours, 7 days a week
+        </address>
+        <p style="margin-top:.7rem;color:var(--muted)">Licensed in California (CSLB). Serving the San Gabriel Valley from the Hub City.</p>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <ul>
+          <li><a href="/services/slab-leak-detection-and-repair">Slab Leak Repair</a></li>
+          <li><a href="/services/pinhole-leak-detection-and-repair">Pinhole Leak Repair</a></li>
+          <li><a href="/services/pool-leak-detection-and-repair">Pool Leak Detection</a></li>
+          <li><a href="/services/sewer-line-leak-detection-and-repair">Sewer Line Leaks</a></li>
+          <li><a href="/services/water-heater-leak-detection-and-repair">Water Heater Leaks</a></li>
+          <li><a href="/services">All 43 Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Service Areas</h3>
+        <ul>
+          <li><a href="/locations/downtown-la-puente">Downtown La Puente</a></li>
+          <li><a href="/locations/west-puente-valley">West Puente Valley</a></li>
+          <li><a href="/locations/bassett-la-puente">Bassett</a></li>
+          <li><a href="/locations/west-covina-ca">West Covina</a></li>
+          <li><a href="/locations/hacienda-heights-ca">Hacienda Heights</a></li>
+          <li><a href="/locations">All 26 Areas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <ul>
+          <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Tools <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/hidden-water-leak-detector">Hidden Leak Detector</a></li>
+          <li><a href="/leak-cost-calculator">Leak Cost Calculator</a></li>
+          <li><a href="/slab-leak-risk-checker">Slab Leak Risk Checker</a></li>
+          <li><a href="/pool-leak-bucket-test">Pool Bucket Test</a></li>
+          <li><a href="/tools">All Free Tools &rarr;</a></li>
+        </ul>
+      </li>
+      <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>&copy; 2026 La Puente Leak Repair Experts</span>
+      <span>La Puente, CA &middot; Los Angeles County &middot; <a href="tel:+16268986169">(626) 898-6169</a></span>
+    </div>
+  </div>
+</footer>
+
+<a class="mobile-call" href="tel:+16268986169">&#9742; Call Now &middot; (626) 898-6169</a>
+
+<script>
+var menuToggle = document.getElementById("menuToggle");
+var navMenu = document.getElementById("navMenu");
+menuToggle.addEventListener("click", function () {
+  var isOpen = navMenu.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+});
+var dropBtns = document.querySelectorAll(".drop-btn");
+for (var i = 0; i < dropBtns.length; i++) {
+  dropBtns[i].addEventListener("click", function (e) {
+    var li = e.currentTarget.parentElement;
+    var open = li.classList.toggle("open");
+    e.currentTarget.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+}
+document.addEventListener("click", function (e) {
+  var drops = document.querySelectorAll(".has-drop.open");
+  for (var j = 0; j < drops.length; j++) {
+    if (!drops[j].contains(e.target)) {
+      drops[j].classList.remove("open");
+      var b = drops[j].querySelector(".drop-btn");
+      if (b) { b.setAttribute("aria-expanded", "false"); }
+    }
+  }
+});
+</script>
+</body>
+</html>

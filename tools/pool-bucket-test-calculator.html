@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/logo-icon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/logo-icon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<title>Pool Bucket Test Calculator | La Puente Leak Check</title>
+<meta name="description" content="Enter your 24-hour bucket test results and pool size to get a leak verdict and estimated gallons lost per day, tuned for inland heat. (626) 898-6169.">
+<link rel="canonical" href="https://lapuenteleakrepairpros.com/tools/pool-bucket-test-calculator">
+<meta property="og:title" content="Pool Bucket Test Calculator | La Puente Leak Check">
+<meta property="og:description" content="Enter your 24-hour bucket test results and pool size to get a leak verdict and estimated gallons lost per day, tuned for inland heat. (626) 898-6169.">
+<meta property="og:url" content="https://lapuenteleakrepairpros.com/tools/pool-bucket-test-calculator">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://lapuenteleakrepairpros.com/images/hero/hero-bg.jpg">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Plumber",
+  "@id": "https://lapuenteleakrepairpros.com/#business",
+  "name": "La Puente Leak Repair Experts",
+  "telephone": "+16268986169",
+  "url": "https://lapuenteleakrepairpros.com/",
+  "image": "https://lapuenteleakrepairpros.com/images/hero/hero-bg.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "3107 Lake View Rd",
+    "addressLocality": "La Puente",
+    "addressRegion": "CA",
+    "postalCode": "91744",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.02,
+    "longitude": -117.9495
+  },
+  "areaServed": [
+    "La Puente",
+    "West Covina",
+    "Hacienda Heights",
+    "Baldwin Park",
+    "South El Monte",
+    "Rowland Heights",
+    "Whittier",
+    "Covina"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "00:00",
+      "closes": "23:59"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://lapuenteleakrepairpros.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Free Tools",
+      "item": "https://lapuenteleakrepairpros.com/tools"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Pool Bucket Test Calculator",
+      "item": "https://lapuenteleakrepairpros.com/tools/pool-bucket-test-calculator"
+    }
+  ]
+}
+</script>
+<script>
+function runBucket() {
+  var pool = parseFloat(document.getElementById("pooldrop").value) || 0;
+  var bucket = parseFloat(document.getElementById("bucketdrop").value) || 0;
+  var L = parseFloat(document.getElementById("plen").value) || 0;
+  var W = parseFloat(document.getElementById("pwid").value) || 0;
+  var v = document.getElementById("verdict");
+  var d = document.getElementById("detail");
+  var box = document.getElementById("result");
+  var net = pool - bucket;
+  var area = L * W * 0.85;
+  var galPerDay = net > 0 ? area * (net / 12) * 7.48 : 0;
+  if (L <= 0 || W <= 0) {
+    v.textContent = "Enter pool dimensions";
+    d.textContent = "Length and width let the calculator convert inches of level into gallons. Estimate to the nearest foot; precision here barely moves the verdict.";
+  } else if (net <= 0.06) {
+    v.textContent = "Verdict: evaporation, plumbing innocent";
+    d.textContent = "Your pool and bucket dropped together within measurement noise, which is the weather doing exactly what inland summers do. Log the result with the date; a clean baseline makes any future test instantly meaningful.";
+  } else if (net <= 0.19) {
+    v.textContent = "Verdict: borderline, retest before concluding";
+    d.textContent = "The pool outdropped the bucket by a small margin that sloppy conditions can fake. Rerun a clean 24 hours, pump on normal schedule, no swimmers or top-ups, and add a pump-off day. Two consistent borderline results together justify a professional look, especially with roughly " + Math.round(galPerDay) + " gallons a day implied.";
+  } else {
+    v.textContent = "Verdict: leak, roughly " + Math.round(galPerDay).toLocaleString() + " gallons per day";
+    d.textContent = "The pool is losing about " + net.toFixed(2) + " inches a day beyond evaporation, and on your dimensions that is real metered water leaving through a hole. Note whether the loss tracks the pump running or not, photograph both marks, and bring the numbers to the call. Detection starts most of the way finished.";
+  }
+  box.className = "tool-result show";
+}
+</script>
+
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="La Puente Leak Repair Experts home">
+      <img src="/images/logo.png"
+           alt="La Puente Leak Repair Experts"
+           class="logo-img"
+           width="220" height="105"
+           loading="eager"
+           decoding="async">
+    </a>
+    <button class="hamburger" id="menuToggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+    <ul class="nav-menu" id="navMenu">
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Services <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/services/slab-leak-detection-and-repair">Slab Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/pinhole-leak-detection-and-repair">Pinhole Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/pool-leak-detection-and-repair">Pool Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/foundation-leak-detection-and-repair">Foundation Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/sewer-line-leak-detection-and-repair">Sewer Line Leak Detection &amp; Repair</a></li>
+          <li><a href="/services/water-heater-leak-detection-and-repair">Water Heater Leak Detection &amp; Repair</a></li>
+          <li><a href="/services">View All 43 Services &rarr;</a></li>
+        </ul>
+      </li>
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Service Areas <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/locations/downtown-la-puente">Downtown La Puente</a></li>
+          <li><a href="/locations/old-town-la-puente">Old Town La Puente</a></li>
+          <li><a href="/locations/west-puente-valley">West Puente Valley</a></li>
+          <li><a href="/locations/bassett-la-puente">Bassett</a></li>
+          <li><a href="/locations/west-covina-ca">West Covina</a></li>
+          <li><a href="/locations/hacienda-heights-ca">Hacienda Heights</a></li>
+          <li><a href="/locations">View All 26 Areas &rarr;</a></li>
+        </ul>
+      </li>
+      <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Tools <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/hidden-water-leak-detector">Hidden Leak Detector</a></li>
+          <li><a href="/leak-cost-calculator">Leak Cost Calculator</a></li>
+          <li><a href="/slab-leak-risk-checker">Slab Leak Risk Checker</a></li>
+          <li><a href="/pool-leak-bucket-test">Pool Bucket Test</a></li>
+          <li><a href="/tools">All Free Tools &rarr;</a></li>
+        </ul>
+      </li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a class="nav-phone" href="tel:+16268986169">Call (626) 898-6169</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" style="padding-bottom:1rem">
+  <div class="container" style="max-width:860px">
+    <p class="eyebrow">Free tool &middot; Backyard verdicts &middot; La Puente, CA</p>
+    <h1>Pool Bucket Test <em>Calculator</em></h1>
+    <p class="hero-sub">The bucket test produces two pencil marks; this calculator turns them into a verdict and a number. Enter what dropped over twenty-four hours and your pool&rsquo;s size, and the arithmetic separates East La Puente&rsquo;s genuine summer evaporation from water leaving through a hole. Verdicts that say leak continue at <a href="tel:+16268986169">(626) 898-6169</a>.</p>
+  </div>
+</section>
+<section class="section" style="padding-top:1rem">
+  <div class="container" style="max-width:860px">
+    <div class="tool-card">
+      <h2>Enter your 24-hour test results</h2>
+      
+      <div class="tool-row">
+        <div class="tool-field">
+          <label for="pooldrop">Pool level drop (inches in 24h)</label>
+          <input type="number" id="pooldrop" min="0" max="12" step="0.0625" value="0.5">
+        </div>
+        <div class="tool-field">
+          <label for="bucketdrop">Bucket level drop (inches in 24h)</label>
+          <input type="number" id="bucketdrop" min="0" max="12" step="0.0625" value="0.25">
+        </div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-field">
+          <label for="plen">Pool length (ft)</label>
+          <input type="number" id="plen" min="5" max="80" value="30">
+        </div>
+        <div class="tool-field">
+          <label for="pwid">Pool width (ft)</label>
+          <input type="number" id="pwid" min="5" max="40" value="15">
+        </div>
+      </div>
+
+      <button class="tool-btn" onclick="runBucket()">Get the verdict</button>
+      <div class="tool-result" id="result">
+        <div class="verdict" id="verdict"></div>
+        <p id="detail"></p>
+      </div>
+      <p class="tool-note">Run the test with the pump on its normal schedule, no swimmers, no rain, no top-ups. A second pump-off day adds the pressure-side versus shell diagnostic. Results are planning estimates, not a diagnosis or a bill. For the real answer on your actual pipes, <a href="tel:+16268986169">(626) 898-6169</a> is free to call.</p>
+    </div>
+    <p class="tool-note" style="margin-top:.8rem">Screenshot your result before you call. Telling the dispatcher what the tool showed, and which inputs produced it, routinely saves the first ten minutes of a visit, and <a href="tel:+16268986169">(626) 898-6169</a> is answered by people who read these tools daily.</p>
+  </div>
+</section>
+
+<section class="section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>The arithmetic under the verdict</h2>
+    <p>Evaporation acts equally on pool and bucket, so subtracting the bucket&rsquo;s drop from the pool&rsquo;s isolates the unexplained loss, and unexplained inches convert to gallons through your surface area: square footage times inches over twelve, times 7.48 gallons per cubic foot, with a modest shape factor since few backyard pools are true rectangles. The thresholds are deliberately honest, a sixteenth of an inch is inside pencil-mark noise, while a fifth of an inch daily on a typical La Puente pool is hundreds of gallons a week that the meter is buying.</p>
+    <p style="margin-top:.9rem">Inland heat is real here, summer evaporation alone can pull a quarter inch on a dry, hot day, which is exactly why the bucket exists: it measures the weather so you do not have to guess it.</p>
+  </div>
+</section>
+
+<section class="section panel-section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>After a leak verdict: what the numbers already told us</h2>
+    <p>Bring three facts to the call and the professional sequence starts ahead: the net daily loss, whether a pump-off day changed it, and where the level finally stabilizes if you let it fall. Pump-correlated loss points at pressurized plumbing loops; pump-off loss points at the shell and fittings; and a stabilizing level marks the leak&rsquo;s height on the structure like a ruler. The full method, dye at the penetrations, isolation pressure tests on each line, listening under the deck, then takes the search from a verdict to a marked point.</p>
+    <p style="margin-top:.9rem">A pool that keeps its water pays the repair back on the next few bills, which makes this one of the rare verdicts homeowners end up glad to receive.</p>
+  </div>
+</section>
+
+<section class="section" style="padding:2.2rem 0">
+  <div class="container" style="max-width:860px">
+    <h2>Where this tool hands off</h2>
+    <p>Leak verdicts continue on the pool pages, and the notebook&rsquo;s bucket-test post carries the full protocol.</p>
+    <div class="area-links" style="margin-top:1rem">
+      <a href="/services/pool-leak-detection-and-repair">Pool Leak Detection</a>
+      <a href="/services/inground-pool-leak-detection-and-repair">Inground Pool Leak Repair</a>
+      <a href="/services/hot-tub-and-spa-leak-detection-and-repair">Hot Tub &amp; Spa Leak Repair</a>
+      <a href="/tools/leak-cost-calculator">Leak Cost Calculator</a>
+    </div>
+    <p class="view-all">Every handoff above also fits in one call: <a href="tel:+16268986169">(626) 898-6169</a>, at whatever hour the tool got used.</p>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>Tools estimate. Visits confirm.</h2>
+    <p>Every result above compresses to the same next step when it matters: a located leak and an upfront number.</p>
+    <a class="btn-invert" href="tel:+16268986169">&#9742; Call (626) 898-6169 &middot; 24/7</a>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h3>La Puente Leak Repair Experts</h3>
+        <address class="nap">
+          3107 Lake View Rd<br>
+          La Puente, CA 91744<br>
+          <a href="tel:+16268986169">(626) 898-6169</a><br>
+          Open 24 hours, 7 days a week
+        </address>
+        <p style="margin-top:.7rem;color:var(--muted)">Licensed in California (CSLB). Serving the San Gabriel Valley from the Hub City.</p>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <ul>
+          <li><a href="/services/slab-leak-detection-and-repair">Slab Leak Repair</a></li>
+          <li><a href="/services/pinhole-leak-detection-and-repair">Pinhole Leak Repair</a></li>
+          <li><a href="/services/pool-leak-detection-and-repair">Pool Leak Detection</a></li>
+          <li><a href="/services/sewer-line-leak-detection-and-repair">Sewer Line Leaks</a></li>
+          <li><a href="/services/water-heater-leak-detection-and-repair">Water Heater Leaks</a></li>
+          <li><a href="/services">All 43 Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Service Areas</h3>
+        <ul>
+          <li><a href="/locations/downtown-la-puente">Downtown La Puente</a></li>
+          <li><a href="/locations/west-puente-valley">West Puente Valley</a></li>
+          <li><a href="/locations/bassett-la-puente">Bassett</a></li>
+          <li><a href="/locations/west-covina-ca">West Covina</a></li>
+          <li><a href="/locations/hacienda-heights-ca">Hacienda Heights</a></li>
+          <li><a href="/locations">All 26 Areas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <ul>
+          <li class="has-drop">
+        <button class="drop-btn" aria-expanded="false">Tools <span aria-hidden="true">&#9662;</span></button>
+        <ul class="dropdown">
+          <li><a href="/hidden-water-leak-detector">Hidden Leak Detector</a></li>
+          <li><a href="/leak-cost-calculator">Leak Cost Calculator</a></li>
+          <li><a href="/slab-leak-risk-checker">Slab Leak Risk Checker</a></li>
+          <li><a href="/pool-leak-bucket-test">Pool Bucket Test</a></li>
+          <li><a href="/tools">All Free Tools &rarr;</a></li>
+        </ul>
+      </li>
+      <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>&copy; 2026 La Puente Leak Repair Experts</span>
+      <span>La Puente, CA &middot; Los Angeles County &middot; <a href="tel:+16268986169">(626) 898-6169</a></span>
+    </div>
+  </div>
+</footer>
+
+<a class="mobile-call" href="tel:+16268986169">&#9742; Call Now &middot; (626) 898-6169</a>
+
+<script>
+var menuToggle = document.getElementById("menuToggle");
+var navMenu = document.getElementById("navMenu");
+menuToggle.addEventListener("click", function () {
+  var isOpen = navMenu.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+});
+var dropBtns = document.querySelectorAll(".drop-btn");
+for (var i = 0; i < dropBtns.length; i++) {
+  dropBtns[i].addEventListener("click", function (e) {
+    var li = e.currentTarget.parentElement;
+    var open = li.classList.toggle("open");
+    e.currentTarget.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+}
+document.addEventListener("click", function (e) {
+  var drops = document.querySelectorAll(".has-drop.open");
+  for (var j = 0; j < drops.length; j++) {
+    if (!drops[j].contains(e.target)) {
+      drops[j].classList.remove("open");
+      var b = drops[j].querySelector(".drop-btn");
+      if (b) { b.setAttribute("aria-expanded", "false"); }
+    }
+  }
+});
+</script>
+</body>
+</html>
